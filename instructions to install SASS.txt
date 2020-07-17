@@ -1,0 +1,28 @@
+steps to install saas 
+
+1.download and install the file from nodejs.org
+
+2.open terminal in the folder file
+
+3.type "npm init -y" to initialise the package.jason
+
+4.then type"npm install node-sass  --save-dev or npm i --save-dev node-sass"
+
+NOTE-if u want to share the project just share the package.json file .
+
+FOR COMPLILING ="npm run compile:sass -w" w  for watch
+FOR LIVE WATCH= live-server
+
+scripts:
+"build-css": "node-sass -o css sass/main.scss",
+"start": "nodemon -e scss -x \"npm run build-css\""
+
+
+A fix for unreadable or file not found error while compileing:
+"npm i --save-dev nodemon"
+
+
+
+
+
+

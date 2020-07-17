@@ -1,0 +1,92 @@
+.story{
+    width: 75%;
+    margin: 0 auto;
+    box-shadow: 0 3rem 6rem rgba($color-black,.1);
+    background-color: #ffffff91;
+    border-radius: 3px;
+    padding: 6rem;
+    padding-left: 9rem;
+    font-size: $default-font-size;
+    transform: skewX(-11deg);
+    margin-bottom:5rem;
+
+    @include respond(tab-port){
+        width: 100%;
+        padding: 4rem;
+        padding-left: 7rem;
+    }
+    
+    @include respond(phone){
+        transform: skewX(0);
+    }
+    // & > * { (we cant use this as we have already used tranform in shape.2 tranform properties cant exist and work together as the other defiend after will take the priority here so we have to defined skey personally in each element)                   
+    //     transform: skewX(12deg);
+    // }
+
+    &__shape{
+        width: 15rem;
+        height: 15rem;
+        float: left;
+        -webkit-shape-outside:circle(50% at 50% 50%); //browser support
+        shape-outside:circle(50% at 50% 50%);//element to be floated and defined dimension if this property is used 
+        transform: translateX(-3rem) skewX(12deg);//with float we shouldnt mingle with margin so we use transform here
+        position: relative;
+        //transform for skew12deg if defined separately the text and the image will stick but if defined with previous transform it works fine.(reason unknown)
+        overflow: hidden;//in other browsers the image overflows as certain property arent applied e.g firefox
+        border-radius: 50%;//this is when the clip path property doesnt work properly
+
+        @supports(-webkit-clip-path:polygon( 0 0)) or (clip-path:polygon( 0 0)){ // for the browsers to which the clip path propeties doesnt sup we define this
+
+            -webkit-clip-path: circle(50% at 50% 50%);
+            clip-path: circle(50% at 50% 50%);//to make the element look like a circle ...previously it was just the propeties of circle
+            -webkit-clip-path: circle(50% at 50% 50%);
+            clip-path: circle(50% at 50% 50%);//to make the element look like a circle ...previously it was just the propeties of circle
+
+            border-radius: none;// cuz in clip path we already do the image  borer radius thing so if it works thn we dont have to again define it 
+        }
+
+    @include respond(phone){
+        transform: translateX(-3rem) skewX(0);
+    }
+
+    }
+
+    &__img{
+        height:100%;//100% of the parents shape i.e the circle we defined
+        transform: translateX(-4rem) scale(1.4); 
+        backface-visibility: hidden;
+        transition: all 0.5s;
+        
+    }
+    
+    &__text{ 
+        transform: skewX(12deg);
+
+        @include respond(phone){
+            transform: skewX(0deg);
+        }
+    }
+
+    &__caption{
+        position: absolute;
+        top:50% ;
+        left: 50%;
+        transform: translate(-50%,20%);
+        color: $color-white;
+        font-size: 1.7rem;
+        text-align: center;
+        opacity: 0; //to make it invisible
+        transition: all 0.5s;
+        backface-visibility: hidden;//to prevent the shaking of the hover at the end of the animation
+    }
+
+    &:hover &__caption{  //as soon as the story is hovered we want to change the caption
+        opacity: 1;
+        transform: translate(-50%,-50%);
+    }
+
+    &:hover &__img{ //hovering the object we want ot change the image
+        transform: translateX(-4rem) scale(1); 
+        filter: blur(3px) brightness(80%);
+    }
+}

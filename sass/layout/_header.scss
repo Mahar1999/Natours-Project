@@ -1,0 +1,73 @@
+.header{
+    height: 85vh;
+    background-image:linear-gradient( 
+        to right bottom,
+        rgba($color-primary-light,0.8),
+        rgba($color-primary-dark,0.8)),
+        url(../img/hero-small.jpg);
+
+    background-size:cover;
+    background-position:top ;
+    position: relative;
+
+    @supports(-webkit-clip-path:polygon( 0 0)) or (clip-path:polygon( 0 0)){ // for the browsers to which the clip path propeties doesnt sup we define this
+        
+        -webkit-clip-path: polygon(0 0, 100% 0, 100% 75vh, 0% 100%);//prefix to make clip path compatible with the browser
+        clip-path: polygon(0 0, 100% 0, 100% 75vh, 0% 100%);
+        height: 95vh;
+    }
+
+    @media (min-resolution:192dpi) and (min-width:37.5em),//600px /16 =37.5 em
+           (-wekit-min-device-pixel-ratio:2) and (min-width:37.5em),// this here is for safari version as safari doesnt support min-resolution,here 2 denotes the 2x density ratio
+           (min-width:125em){// 2000px / 16 = 125em
+               
+            // dpi=dots per inch,cuz this is the default resolution of apple retina screen,refernce screen 192dpi(2x desnity screens)
+             //the commma acts a "OR" here where 2 conditions can be apllied to lessen the code
+
+        background-image:linear-gradient( 
+            to right bottom,
+            rgba($color-primary-light,0.8),
+            rgba($color-primary-dark,0.8)),
+            url(../img/hero.jpg);
+    }
+
+    // @media (min-width:2000px){
+
+    //     background-image:linear-gradient( 
+    //         to right bottom,
+    //         rgba($color-primary-light,0.8),
+    //         rgba($color-primary-dark,0.8)),
+    //         url(../img/hero.jpg);
+    // }
+
+
+    @include respond(phone){
+    -webkit-clip-path: polygon(0 0, 100% 0, 100% 85vh, 0% 100%);//prefix to make clip path compatible with the browser
+    clip-path: polygon(0 0, 100% 0, 100% 85vh, 0% 100%);
+    }
+
+    @include respond(tab-port){
+    -webkit-clip-path: polygon(0 0, 100% 0, 100% 82vh, 0% 100%);//prefix to make clip path compatible with the browser
+    clip-path: polygon(0 0, 100% 0, 100% 82vh, 0% 100%);
+    }
+
+    &__text-box{
+    position: absolute;
+        top: 40%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+        text-align: center;
+    }
+
+    &__logo-box{
+        position: absolute;
+        top: 4rem;
+        left: 4rem;
+    }
+    
+    &__logo{
+        height:3.5rem;
+    }
+    
+
+} 

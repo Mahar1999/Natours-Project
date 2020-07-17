@@ -1,0 +1,112 @@
+.popup{
+ 
+    width: 100%;
+    height: 100vh;
+    background-color: rgba($color-black,0.8);
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index:9999 ;
+    opacity: 0;//we dont use display none cuz we thn cant be able to animate the elemnts so we use this property to make popup disapper
+    visibility: hidden;//doing this the text and content would still be there just not visible
+    transition: all .3s;
+    
+    //the backdrop filter doesnt work in chrome but does work in safarei so we use suppport keyword to make the background but on safari whereas just a black backgrnd in chrom using backdrop-filter property
+    
+    @supports (-webkit-backdrop-filter: blur(10px)) or (backdrop-filter:blur(10px)){
+        -webkit-backdrop-filter: blur(10px);
+        backdrop-filter:blur(10px);
+        background-color: rgba($color-black,0.3);
+    }
+
+    &__content{
+
+        @include absCenter;
+
+        width: 75%;
+        background-color: $color-white;
+        box-shadow: 0 2rem 4rem rgba($color-black,0.2);
+        border-radius: 3px;
+        display: table;//on parent box.Making tabel helps us to maintain the height of the elements ths lost in using the float function
+        opacity: 0;
+        transform: translate(-50%,-50%) scale(0.25);//there can only be one tranform property if there are more than one than the last property overrides the others
+        transition: all 0.4s 0.2s;  
+
+        @include respond(tab-land){
+            
+        }
+    }
+
+    &__left{
+        width: 33.333333%;
+        display: table-cell;//child tabel-equal heights
+        
+        @include respond(tab-port){
+            
+        }
+    }
+    
+    &__right{
+        width: 66.666667%;
+        display: table-cell;//child tabel-equal heights
+        vertical-align: middle;//tabel property to bring content in the middle
+        padding: 3rem 5rem;
+
+          
+        @include respond(tab-port){
+            
+        }
+    }
+
+    &__img{
+        display: block;
+        width: 100%;
+    }
+
+    &__text{
+        font-size: 1.4rem;
+        margin-bottom: 4rem;
+
+        column-count: 2;
+        column-gap: 4rem;
+        column-rule: 1px solid $color-grey-light-2;//the border between the cloumns 
+
+        -moz-hyphens: auto;
+        -ms-hyphens: auto;
+        -webkit-hyphens: auto;
+        hyphens: auto;
+    }
+ 
+
+    // OPEN STATES  
+
+    &:target{
+        opacity: 1;
+        visibility:visible;
+   }
+
+   &:target &__content{  //selecting the popup target then chosing the content element 
+       opacity: 1;
+       transform: translate(-50%,-50%) scale(1);
+
+   }
+
+   &__close{
+       &:link,
+       &:visited{
+           color: $color-grey;
+           position: absolute;// defined postion to popup content as its his first postion parent elemmnet
+           top: 2.5rem;
+           right: 2.5rem;
+           font-size: 3rem;
+           text-decoration: none;
+           display: inline-block;
+           transition: all 0.2s;
+           line-height: 1;
+       }
+
+       &:hover{
+           color: $color-primary;
+       }
+   }
+}

@@ -1,0 +1,220 @@
+.card{
+
+    //funcationalitiy
+
+    perspective: 150rem; //perspective has to be defined into  parent child then extended to child,yo make rotation look nicer
+    -moz-perspective: 150rem;// perpestive for mozilla browsers
+    position: relative;
+    height: 50rem; // height of the card  collapssed afte defining the card flip-flop threfore to make it even er just define height instead of using the clearfix
+
+    &__side{ 
+        // background-color: orangered;
+        color: #fff;
+        font-size:2rem ;
+
+        height: 50rem;
+        transition: all 0.8s ease;//ease animation to make the transition smoother
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        -webkit-backface-visibility: hidden;//we need a prefix for safari to load this property
+        backface-visibility: hidden; // hides the back part of the element
+        border-radius: 3px;
+        overflow: hidden;//image  is overflowing the parent element to avoid tht we use this property
+        box-shadow: 0 1.5rem 4rem rgba($color-black, 0.15);
+
+        &--front{
+            background-color:$color-white;
+        }
+
+        &--back{
+            
+            transform: rotateY(180deg);
+
+            &-1{
+                background-image: linear-gradient(to right bottom ,$color-secondary-light,$color-secondary-dark );
+            }
+            &-2{
+                background-image: linear-gradient(to right bottom ,$color-primary-light,$color-primary-dark );
+            }
+            &-3{
+                background-image: linear-gradient(to right bottom ,$color-tertiary-light,$color-tertiary-dark);
+            }
+        }
+    }
+
+    &:hover &__side--front{ 
+        transform: rotateY(-180deg);
+        
+    }
+    &:hover &__side--back{ 
+        transform: rotateY(0);
+        
+    }
+
+//FRONT STYLING 
+    &__picture {
+        background-size: cover;
+        height: 23rem ;
+        background-blend-mode: screen;// blends the leniar gradient into the image ,like opacity 
+        -webkit-clip-path: polygon(0 0 , 100% 0 , 100% 85%,0 100%);//this is a prefix
+        clip-path: polygon(0 0 , 100% 0 , 100% 85%,0 100%);//this property is very modern so to make it compatible with the browser we use webkit
+        //clip-path doesnt work on internt explorer and edge 
+
+        border-top-left-radius:3px ;// as using clip path it breaks the overflow property hindering the round corners therefore thy ar manually defined here
+        border-top-right-radius:3px;
+        &--1{
+            background-image: linear-gradient(to right bottom ,$color-secondary-light,$color-secondary-dark ),url(../img/nat-5.jpg);//after the compling the code willl be saved in style.css.From there going 1 folder up i.e Natours thn gng  to img  folder
+        }
+
+        &--2{
+            background-image: linear-gradient(to right bottom ,$color-primary-light,$color-primary-dark ),url(../img/nat-5.jpg);
+        }
+
+        &--3{
+            background-image:linear-gradient(to right bottom ,$color-tertiary-light,$color-tertiary-dark), url(../img/nat-5.jpg);
+        }
+    }
+
+    &__heading{
+        font-size: 2.8rem;
+        font-weight: 300;
+        text-transform: uppercase;
+        color: $color-white;
+        position: absolute;
+        top: 12rem;
+        right: 2rem;
+        text-align: right;
+        width: 75%;
+    }
+
+    &__heading-span{
+        padding: 1rem 1.5rem;
+        -webkit-box-decoration-break: clone;//modern keyword theregore require webkit to run into chrome
+        box-decoration-break: clone;// intially the thing is treated as a single text and the padding is applied at only start and end to fix this this property is used  where the padding is now applied to both the terms equaaly
+
+        &--1 {
+            background-image: linear-gradient(to right bottom,
+            rgba($color-secondary-light,.85),
+            rgba($color-secondary-dark,.85));
+        }
+        &--2 {
+            background-image: linear-gradient(to right bottom,
+            rgba($color-primary-light,.85),
+            rgba($color-primary-dark,.85));
+        }
+        &--3 {
+            background-image: linear-gradient(to right bottom,
+            rgba($color-tertiary-light,.85),
+            rgba($color-tertiary-dark,.85));
+        }
+    }
+
+    &__details{
+        ul{
+            list-style: none;
+            width: 80%;
+            margin: 0 auto;
+
+            li{
+                text-align: center;
+                font-size: 1.5rem;
+                padding: 1rem;
+                color:$color-grey;
+;
+
+                &:not(:last-child){
+                    border-bottom:1px solid $color-grey-light-2;
+                }
+            }
+        }
+    }
+    //FRONT SIDE STYLING
+
+    &__cta{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%,-50% );
+        width: 90%;
+        text-align: center; 
+    }
+
+    &__price-box{
+        text-align: center;
+        color: $color-white;
+        margin-bottom: 8rem;
+
+    }
+
+    &__price-only{
+        font-size: 1.4rem;
+        text-transform: uppercase ;
+    }
+
+    &__price-value{
+        font-size: 6rem;
+        font-weight: 100;
+
+    }
+
+
+
+    @include respond(tab-port){
+
+             //funcationalitiy
+
+        height: auto;//intially it was 52rem 
+        border-radius: 3px;
+        background-color: $color-white; 
+        box-shadow: 0 1.5rem 4rem rgba($color-black, 0.15);
+
+        &__side{ 
+            height: auto;
+            position: relative;//cuz we no longer have 2 sides occupying the same space
+            box-shadow: none;
+            
+            &--back{
+                
+                transform: rotateY(0);// initally the back part is rotated 180deg but we dont want that so now we make it to 0
+                clip-path: polygon(0 15%,100% 0 ,100% 100% ,0 100%);
+            }
+        }
+
+        &:hover &__side--front{ 
+            transform: rotateY(0);// initally the front part was set to 180deg but now we dont want it to rotate so 0deg
+            
+        }
+        &:hover &__side--back{ 
+            transform: rotateY(0);
+            
+        }
+
+        &__details{
+            padding:0rem 3rem;
+        }
+
+ 
+        //FRONT SIDE STYLING
+
+        &__cta{
+            position: relative;//intially it was absolute cuz there were 2 sides
+            top: 0;
+            left: 0;
+            transform: translate(0 );
+            width: 100%;
+            padding:7rem 4rem 4rem 4rem;
+          
+        }
+
+        &__price-box{
+            margin-bottom: 3rem;
+
+        }
+
+        &__price-value{
+            font-size: 4rem;
+        }
+    }
+} 
